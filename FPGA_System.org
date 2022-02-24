@@ -1,0 +1,110 @@
+#+TITLE: FPGA System Functional Specification
+#+OPTIONS: toc:nil
+* Project Information
+| FPGA System          |                   |
+|----------------------+-------------------|
+| Author               | Marcus Julian     |
+| Organization         | Accupulse Medical |
+| Project Version      | V 1.0             |
+| Spec. Version        | 1.0               |
+| Date of Current Spec | 14DEC21           |
+
+* Purpose
+Initial Functional specification This document will contain a mixture
+of technical requirements and specifications at the outset. The next
+revision of the documents will separate requirements and
+specifications.
+* Scope
+Initial Definition Initial FPGA/DSP Architecture Accupulse System
+Define requirements for FPGA boards to do initial development and
+prototype.
+* Intended Audience
+Accupulse technical personnel
+* Archiectural Requirements
+The FPGA system will consist of a multiple of FPGA SOC system boards
+with a PCIe 3 interface to a host Windows PC system. System functions
+will be shared acroos boards in that every board shall have the same
+functionality the only differnce being that of channel number. This
+will simplify the system and its maintentance in the long run by
+avioding multiple builds for multiple FPGA boards. Initial development
+may use multiple boards to develop different system functionality to
+allow the parallelsation of tasks; i.e. DSP development done on one
+board while host S/W development is done on another.
+* References
+Flyer COMXpress PCIe Carrier Board.pdf
+Flyer COMXpress.pdf
+* Revision History
+| Revision | Comment               | Resource |
+|----------+-----------------------+----------|
+|      1.0 | Initial               | mfj      |
+* Overview
+
+* Motivations and Constraints
++	Purchase off the shelf (COTS) boards for rapid prototype
++	Use vendors and technology with already
++	Established engineering and technical support resources
++	Use FPGAs made in Intel Fabs in the USA - no Allocation
++	Use FPGAs that can be converted in to Structured ASIC
+* Features
++	QSPF+ Optical Interface to the PIU for patient isolation
++	PCIe 3 interface to the Host
++	2X Serial SATA rev 3 @ 6Gb/s
++	3X USB 2.0
++	1X USB 3.0 OTG Type A
++	SPI, 2C UART, 8 GPIOs
+* Implementation Details
+** Channels per FPGA SOC
+This has yet to be determined. Initial assumption is 64 per board
+| Inputs | B/W | Word |   |  Total |
+|--------+-----+------+---+--------|
+|     64 | 1e6 |   24 |   | 1.54e9 |
+#+TBLFM: @2$5=$1*$2*$3;e3
+The input B/W for the FPGA board can be up to 40Gb/s
+** Localization Data Filters
+I/Q demodulation and low pass filter at ADC sample rate
+** EGM/ECG Data Filters
+FIR LPF and decimation to display storage sample rate (2400Hz)
+** Self Test Signal Generation
++ Capability to generate test signals for self test.
++ Generate LOC signals
+** Host I/F
+16X XCVR 8G channels
+** NDI I/F
+FPGA UART
+** Test Modes
+*** Source signal Tesst
+*** Loop Back Test
+
+*** ADC Test mode
+*** I/Q Test
+*** EGM/ECG Test
+*** Test signal generation
+Use this to hest Host S/W in GUI
++ Other signals?
++ EGM Test signals
++ Magnetic Test signals
++ Impedance Test signals
+** PIU Control
+*** PIU Configuration
+** PIU Status
+*** ADC Health
+** FPGA Status
+*** FPGA Fabric
+*** FPGA Processor
+*** FPGA processor to HOST COMM status
+*** Input and Output FIFO status
+** Diagnostic I/F
+Should this be UART or USB.
+** Raw Data
+Enable the display and processiing of a limited number of channels of
+raw data for system debug.
+* Issues
+** Time synchronzation
++	Magnetic and Impedance synchronization
++	Time stamp sync with host time
+** Magnet and Impedance Reference 
++	Create same phyisical reference location
+** PIU
++	Need Way to combine all digital streams for optical link.
+** 
+  

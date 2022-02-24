@@ -1,0 +1,147 @@
+#+TITLE: PIU System Functional Specification
+#+OPTIONS:
+* Project Information
+| PIU System           |                   |
+|----------------------+-------------------|
+| Author               | Marcus Julian     |
+| Organization         | Accupulse Medical |
+| Project Version      | V 1.0             |
+| Spec. Version        | 1.0               |
+| Date of Current Spec | 18DEC21           |
+
+* Purpose
+Initial Functional specification. This document will contain a mixture
+of technical requirements and specifications at the outset. The next
+revision of the documents will separate requirements and
+specifications. This is the functional specification for the Patient
+Interface Unit (PIU)
+* Scope
++ Initial Functional Specification of the PIU including the Front
+  Panel Interface (FPI).
++ Define Functions in terms of Initial Users requirements.
+* Intended Audience
++ Accupulse technical personnel
++ External Accupulse Consultants
+* Architectural Requirements
++ Interface with SoC System
+* Standards Requirements
+** Safety
+*** Leakage: EN 60601-1, class 1 or newer standard
+*** Protection: EN 60601-2-27 or newer standard
+*** Isolation: >4000 volts; >5000 volts surge
+*** Protection against the ingress water: IPX0
+*** Allowable up to 350 J external cardio-version
+* User Requirements
+Requirements are numbered individually to allow separate referencing.
+** Size
+Fits on patient bedside.
+mfj - more detail here.
+** Power
+*** Europe 220 V AC (China 220-230 V), ≥1.5 A 
+*** USA 110 V AC ≥3.0 A
+*** Power supply: auto-detect 100-240 V, 50/60 Hz
+** Environmental 
+*** Operating: ambient, 10-40 ˚C (50-104 ˚F);
+*** Storage:40(-25 OK too)-70 ˚C (32-158 ˚F)
+** Analog Connections (FPI)
+*** Catheter Connections
+**** CS Catheter  >20 electrodes
+****  Lasso >20 electrodes
+**** Ablation >4 electrodes
+*** Impedance Patches
+****       2x X, 2x Y, 2x Z, 2x Y'?
+*** ECG Patches
+****      12 LEAD ECG
+*** Intracardiac
+**** 64-128 Channel
+*** Pacing
+**** >2 pacing pairs
+mfj - need to understand this better
+*** Magnetic System I/F 
+** Performance Requirements
+*** ECG signals < 2uVrms
+*** Intracardiac < 2uVrms
+*** Impedance Accuracy < 1mm
+*** Respiration Compensation
+*** Full Scale +-1.6 mV to +-125 mV
+*** DC Offset +-500 mV
+*** Absolute Amplitude Accuracy +-10% 
+*** Channel to Channel Accurate +-5%
+
+* References
++ IEC 60601-1 Class 1
++ IEC 60601-2-27
++ Others (add table here)
+* Revision History
+| Revision | Comment               | Resource |
+|----------+-----------------------+----------|
+|      1.0 | Initial               | mfj      |
+* Overview
+
+* Motivations and Constraints
++	Patient Isolation via optical fiber comm
++	All-in-one Patient interface: record, EP map, pace
+* Features
++	QSPF+ Optical Interface to the SoC for patient isolation
++	128 Intracardic Channels
++	Pacing Channels (inputs/outputs)
++	Isolated Power supply (internal/External)
++	Power on self test (POST)
++	Debug Interface via USB
++       View raw channel data of USB
++       Debug and verify independent of SoC system.
+* Implementation Details
+** SoC Interface
++ This has yet to be determined. Initial assumption is 64 chs per SoC.
++ QSPF can handle up to 40Gb/s
++ Assume connections for 4 QSFPs to 4 SoC systems
++ Need to Choose FPGA to encode data streams
+| Outputs | B/W | Word |   |  Total |
+|--------+-----+------+---+--------|
+|     64 | 1e6 |   24 |   | 1.54e9 |
+#+TBLFM: @2$5=$1*$2*$3;e3
+The input B/W for the FPGA board can be up to 40Gb/s
+** Localization Data Filters
+I/Q demodulation here or in FPGA?
+** EGM/ECG Data Filters
+Anti-alias filters for ADCs
+** U/S Receive
+Implement U/S receive system in first generation?
+** Signal Generation
++ Capability to generate test signals for self test?
++ Generate LOC signals VIA DDS?
++ Generate U/S signals in Gen 1?
+** Test Modes
+*** Source signal Test
+*** Loop Back Test
+*** ADC Test mode
+*** I/Q Test
+*** EGM/ECG Test
+*** Test signal generation
+Use this to test Host S/W in GUI
++ Other signals?
++ EGM/ECG Test signals
++ Magnetic Test signals
++ Impedance Test signals
+** PIU Control
+Allow PIU control and configuration over USB to allow for test and
+debug independent of SoC/Host system
+*** PIU Configuration
+**** Pacing Switch
+** PIU Status
+*** ADC Health
+** FPGA Status
+*** SoC Interface check
+*** Input and Output FIFO status
+** Diagnostic I/F
+Should this be UART or USB or ?
+** Raw Data
+Configure for Raw data output via USB for testing without SoC system.
+* Issues
+** POST Extent
+To what extent to we want to have the PIU testable without the SoC
+system?
+** Pacing Implementation
++ Understand Requirements Better
++ Design in Architecture
++ Include switching in first revision?

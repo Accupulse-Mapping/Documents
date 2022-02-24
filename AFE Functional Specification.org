@@ -1,0 +1,36 @@
+#+TITLE: Source Board Functional Specification
+
+* Project Information
+| Project Name         | AFE               |
+|----------------------+-------------------|
+| Author               | Marcus Julian     |
+| Organization         | Accupulse Medical |
+| Project Version      | V 1.0             |
+| Spec. Version        | N/A               |
+| Date of Current Spec | N/A               |
+
+* Objective
+Functional specification of the AFE
+* Scope
+Initial Acchitecture of the AFE
+* Intended Audience
+Accupulse technical personnel
+* References
+* Revision History
+| Revision | Comment               | Resource |
+|----------+-----------------------+----------|
+|      1.0 | Initial               | mfj      |
+* Overview
+* Motivations and Constraints
+* Features
+* Implementation Details
+
+Note:
+Any signals designated with the "mARM" prefix are intended as GPIO to the FPGA fabric
+
+* Clocks and Domains
+
+* Issues
++ HPS and JTAG implementations. Separate or combine?
++ 
+  

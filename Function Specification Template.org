@@ -1,0 +1,34 @@
+#+TITLE: Functional Requirements Template
+
+* Project Information
+| Project Name         | "Project"         |
+|----------------------+-------------------|
+| Author               | Marcus Julian     |
+| Organization         | Accupulse Medical |
+| Project Version      | V 1.0             |
+| Spec. Version        | N/A               |
+| Date of Current Spec | N/A               |
+
+* Purpose
+Functional specification 
+* Scope
+Initial Definition
+* Intended Audience
+Accupulse technical personnel
+* Archiectural Requirements
+* References
+* Revision History
+| Revision | Comment               | Resource |
+|----------+-----------------------+----------|
+|      1.0 | Initial               | mfj      |
+* Overview
+* Motivations and Constraints
+* Features
+* Implementation Details
+
+Notes:
+
+* Clocks and Domains
+* Issues
+
+  

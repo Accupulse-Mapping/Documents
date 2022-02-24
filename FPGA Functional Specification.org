@@ -1,0 +1,69 @@
+#+TITLE: Requirements
+
+* Project Information
+| Project Name         | "Project"         |
+|----------------------+-------------------|
+| Author               | Marcus Julian     |
+| Organization         | Accupulse Medical |
+| Project Version      | V 1.0             |
+| Spec. Version        | N/A               |
+| Date of Current Spec | N/A               |
+
+* Purpose
+Functional specification 
+* Scope
+Initial Acchitecture
+* Intended Audience
+Accupulse technical personnel
+* Archiectural Requirements
+* References
+* Revision History
+| Revision | Comment               | Resource |
+|----------+-----------------------+----------|
+|      1.0 | Initial               | mfj      |
+* Overview
+* Motivations and Constraints
+* Features
+* Implementation Details
+
+Note:
+
+* Clocks and Domains
+
+* Issues
+* FPGA Technical Specification Overview (on going) 
+** Number of Channels
+The Acutus System implemented 8 channels per Altera (Intel) Stratix IV FPGA
+** Raw Sample Rate
+Each Channel has a native sample rate that must be at least 2X the highest
+frequency of interest. However, oversampling by a factor of N will
+reduce channel noise by SQRT(N).
+The ADC sample rate is determined by the LOC frequencies assuming that
+the LOC and EGM ADC are the same. LOC frequencies of around 50kHz are
+commonly used.
+** LOC and EGM Filtering
+To simplify decimation filters, decimation and filtering should be done at integer sub-multiples. All
+filters are implemented as FIR. EGM B/W is around 500Hz. LOC B/W is
+determined by the response time that is necessary for the doctor not
+to feel a lag in the system.
+
+Pre Filter B/W per channel
+
+
+| CHs | SR kHz | Res | Bit Rate MHz |   |
+|-----+--------+-----+--------------+---|
+|   1 |    625 |  32 | 20           |   |
+#+TBLFM: @2$4=$1*$2*$3/1000
+
+Post Filtered Channel Bandwidth
+| CHs         | SR kHz | Res | BW kHz | bit rate  kHz |              |
+|-------------+--------+-----+--------+---------------+--------------|
+| 1           |    625 |  32 |    625 |         20000 | Raw Data     |
+| 1           |    625 |  32 |  6.250 |          200. | Filtered ECG |
+| 3           |    625 |  32 |  6.250 |          600. | Localization |
+| Total       |        |     |        |        20800. | per Channel  |
+| 16 CHS      |        |     |        |       332800. |              |
+| 16CH no RAW |        |     |        |        12800. |              |
+#+TBLFM: @2$5=$1*$3*$4::@3$5=$1*$3*$4::@4$5=$1*$3*$4::@5$5=vsum(@2..@4)::@6$5=16*@5::@7$5=(@3+@4)*16
+
+  
